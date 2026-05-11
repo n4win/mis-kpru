@@ -1,0 +1,15 @@
+.nav {
+  border-radius: 5px;
+  /* padding: var(--mantine-spacing-xs) var(--mantine-spacing-md); */
+}
+
+.nav:hover {
+  /* background-color: var(--mantine-color-gray-0); */
+  color: var(--mantine-color-blue-6);
+}
+
+.sub {
+  margin-left: 5px;
+  font-size: var(--mantine-font-size-sm);
+  border-left: 1px solid var(--mantine-color-gray-3);
+}

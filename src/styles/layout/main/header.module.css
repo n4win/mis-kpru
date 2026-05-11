@@ -1,0 +1,75 @@
+.header {
+  padding-left: var(--mantine-spacing-xl);
+  padding-right: var(--mantine-spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  margin-bottom: calc(7.5rem * var(--mantine-scale));
+}
+
+.root {
+  background: linear-gradient(
+    var(--mantine-color-body),
+    alpha(var(--mantine-color-body), 0.75)
+  );
+  backdrop-filter: blur(3px);
+
+  &::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    height: rem(6px);
+    bottom: rem(-7px);
+    background: linear-gradient(
+      light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.45)),
+      rgba(0, 0, 0, 0)
+    );
+    transition: opacity 0.2s;
+    opacity: 0;
+  }
+}
+
+.scrolled::after {
+  opacity: 1;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+}
+
+.dark {
+  @mixin dark {
+    display: none;
+  }
+
+  @mixin light {
+    display: block;
+  }
+}
+
+.light {
+  @mixin light {
+    display: none;
+  }
+
+  @mixin dark {
+    display: block;
+  }
+}
+
+.themeToggle {
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.iconRotate {
+  transition: transform 0.3s ease;
+}
+
+.iconRotateActive {
+  transform: rotate(180deg);
+}

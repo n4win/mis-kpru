@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@layer mantine, mantine-datatable;
+
+:root {
+  --main-color: #228be6;
+  --sub-color: #228be61a;
+  --color-white: #fff;
+  --color-black: #000;
+  --main-text: #333333;
+  --colum-text: #6a6a6a;
+}
+
+/* label {
+  font-weight: 500 !important;
+} */
+
+.activeTheme {
+  transition: transform 50ms ease-in-out;
+}
+
+.activeTheme:active {
+  transform: scale(0.97);
+}
+
+.mantine-Table-thead {
+  /* background-color: light-dark(#f9f9f9, var(--mantine-color-dark-6)); */
+  color: light-dark(var(--main-text), var(--color-white));
+}
+
+.mantine-Table-th {
+  padding: 8px 10px !important;
+  font-weight: 500;
+  font-size: 13px;
+  /* color: var(--colum-text); */
+}
+
+.mantine-Table-td {
+  font-weight: 300;
+}
+
+.border-table {
+  border-radius: 5px !important;
+  /* border-top: 1px solid light-dark(#f1f1f1, var(--main-text));
+  border-bottom: 1px solid light-dark(#f1f1f1, var(--main-text));
+  border-left: 1px solid light-dark(#f1f1f1, var(--main-text));
+  border-right: 1px solid light-dark(#f1f1f1, var(--main-text)); */
+  /* border-left: none; */
+  /* border-right: none; */
+}
+
+.border-table th:first-child {
+  border-right: 1px solid light-dark(#f1f1f1, var(--main-text));
+}
+
+.border-table td:first-child {
+  border-right: 1px solid light-dark(#f1f1f1, var(--main-text));
+}
+
+/* .mantine-datatable-header {
+  background: var(--main-color);
+  color: white;
+}
+
+.mantine-datatable-header th:hover {
+  background-color: var(--sub-color);
+  color: white;
+} */
+
+.noRecordsBox {
+  font-size: 0;
+  color: light-dark(var(--mantine-colors-dark-3), var(--mantine-colors-gray-5));
+  border: 2px solid
+    light-dark(var(--mantine-colors-gray-4), var(--mantine-colors-dark-5));
+  border-radius: var(--mantine-radius-md);
+  background: light-dark(
+    var(--mantine-colors-gray-1),
+    var(--mantine-colors-dark-6)
+  );
+}

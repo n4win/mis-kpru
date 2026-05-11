@@ -1,0 +1,5 @@
+model departments {
+    depId   Int     @id @default(autoincrement()) @map("dep_id")
+    depName String  @map("dep_name") @db.VarChar(80)
+    users   users[]
+}
