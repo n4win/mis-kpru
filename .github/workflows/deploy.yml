@@ -30,5 +30,4 @@ jobs:
 
       - name: Reload PM2
         run: |
-          $pm2 = "$env:APPDATA\npm\pm2.cmd"
-          & $pm2 reload mis-kpru
+          & "C:\Users\Administrator\AppData\Roaming\npm\pm2.cmd" reload mis-kpru
