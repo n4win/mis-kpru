@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted # ← แก้ตรงนี้
+    runs-on: self-hosted
 
     steps:
       - name: Fix git ownership
@@ -30,4 +30,4 @@ jobs:
 
       - name: Reload PM2
         run: |
-          Start-Process powershell -ArgumentList "-File C:\reload-pm2.ps1" -Verb RunAs -Wait
+          pm2 restart mis-kpru
