@@ -9,25 +9,25 @@ jobs:
   deploy:
     runs-on: self-hosted # ← แก้ตรงนี้
 
-steps:
-  - name: Fix git ownership
-    run: git config --global --add safe.directory C:/websites/mis-kpru
+    steps:
+      - name: Fix git ownership
+        run: git config --global --add safe.directory C:/websites/mis-kpru
 
-  - name: Pull latest code
-    run: |
-      cd C:\websites\mis-kpru
-      git pull origin main
+      - name: Pull latest code
+        run: |
+          cd C:\websites\mis-kpru
+          git pull origin main
 
-  - name: Install dependencies
-    run: |
-      cd C:\websites\mis-kpru
-      npm install --production
+      - name: Install dependencies
+        run: |
+          cd C:\websites\mis-kpru
+          npm install --production
 
-  - name: Build
-    run: |
-      cd C:\websites\mis-kpru
-      npm run build
+      - name: Build
+        run: |
+          cd C:\websites\mis-kpru
+          npm run build
 
-  - name: Reload PM2
-    run: |
-      pm2 reload mis-kpru
+      - name: Reload PM2
+        run: |
+          pm2 reload mis-kpru
