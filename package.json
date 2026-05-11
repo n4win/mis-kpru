@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 4444",
-    "build": "next build",
-    "start": "next start",
+    "dev:server": "cross-env NODE_ENV=development ts-node --project tsconfig.server.json server.ts",
+    "build": "tsc -p tsconfig.server.json && next build",
+    "start": "cross-env NODE_ENV=production node dist/server.js",
     "lint": "eslint"
   },
   "dependencies": {
