@@ -30,4 +30,4 @@ jobs:
 
       - name: Reload PM2
         run: |
-          & "C:\Users\Administrator\AppData\Roaming\npm\pm2.cmd" reload mis-kpru
+          & "C:\npm-global\pm2.cmd" reload mis-kpru
