@@ -30,4 +30,4 @@ jobs:
 
       - name: Reload PM2
         run: |
-          & "C:\npm-global\pm2.cmd" reload mis-kpru
+          Start-Process powershell -ArgumentList "-File C:\websites\reload-pm2.ps1" -Verb RunAs -Wait
