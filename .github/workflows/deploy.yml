@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd C:\websites\mis-kpru
-          npm install --production
+          npm install
 
       - name: Build
         run: |
