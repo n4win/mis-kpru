@@ -8,7 +8,7 @@ import {
   IconDashboard,
   IconCurrencyDollar,
   IconReceipt,
-  IconBuildingSkyscraper,
+  Icon123,
 } from "@tabler/icons-react";
 
 interface AppMenu {
@@ -135,7 +135,7 @@ export const Menu: AppMenu = {
       title: "ข้อมูลหน่วยงาน",
       path: "/admin/department",
       disabled: true,
-      icon: Icon(IconBuildingSkyscraper),
+      icon: Icon(Icon123),
     },
     {
       title: "จัดสรรงบประมาณ",
