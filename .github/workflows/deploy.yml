@@ -30,4 +30,4 @@ jobs:
 
       - name: Reload PM2
         run: |
-          Start-Process powershell -ArgumentList "-File C:\websites\reload-pm2.ps1" -Verb RunAs -Wait
+          Start-Process powershell -ArgumentList "-File C:\reload-pm2.ps1" -Verb RunAs -Wait
