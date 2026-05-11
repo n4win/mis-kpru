@@ -132,7 +132,7 @@ export const Menu: AppMenu = {
       icon: Icon(IconUsers),
     },
     {
-      title: "ข้อมูลหน่วยงาน",
+      title: "ข้อมูลหน่วยงาน1",
       path: "/admin/department",
       disabled: true,
       icon: Icon(Icon123),

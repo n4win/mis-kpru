@@ -29,8 +29,6 @@ jobs:
           npm run build
 
       - name: Reload PM2
-        env:
-          PM2_HOME: C:\Users\Administrator\.pm2
         run: |
-          pm2 restart mis-kpru
-          pm2 save
+          schtasks /run /tn "PM2-Restart-mis-kpru"
+          Start-Sleep -Seconds 5
