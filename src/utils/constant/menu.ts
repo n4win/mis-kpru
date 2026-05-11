@@ -135,7 +135,7 @@ export const Menu: AppMenu = {
       title: "ข้อมูลหน่วยงานtest",
       path: "/admin/department",
       disabled: true,
-      icon: Icon(Icon123),
+      icon: Icon(IconCurrencyDollar),
     },
     {
       title: "จัดสรรงบประมาณ",
