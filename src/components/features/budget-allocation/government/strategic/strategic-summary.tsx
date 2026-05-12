@@ -1,14 +1,14 @@
 "use client";
 
 import { Card, Divider, Group, NumberFormatter, Stack, Text } from "@mantine/core";
-import { FACULTY_CODES, FACULTY_LABEL, type ProjectNode } from "./types";
-import { rollupTree } from "./government-utils";
+import { FACULTY_CODES, FACULTY_LABEL, type ProjectNode } from "../types";
+import { rollupTree } from "../government-utils";
 
-interface GovernmentSummaryProps {
+interface StrategicSummaryProps {
   roots: ProjectNode[];
 }
 
-export function GovernmentSummary({ roots }: GovernmentSummaryProps) {
+export function StrategicSummary({ roots }: StrategicSummaryProps) {
   const { total, byFaculty } = rollupTree(roots);
 
   return (

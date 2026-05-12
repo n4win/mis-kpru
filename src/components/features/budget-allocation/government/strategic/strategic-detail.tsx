@@ -2,8 +2,6 @@
 
 import {
   Alert,
-  Badge,
-  Button,
   Card,
   Center,
   Divider,
@@ -18,86 +16,56 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import {
-  IconAlertCircle,
-  IconClick,
-  IconCoins,
-  IconEdit,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconAlertCircle, IconClick, IconCoins } from "@tabler/icons-react";
 import {
   FACULTY_CODES,
   FACULTY_LABEL,
   type FacultyCode,
   type ProjectNode,
-} from "./types";
-import { fmt, isLeaf, nodeAllocations, nodeTotal } from "./government-utils";
+} from "../types";
+import { fmt, isLeaf, nodeAllocations, nodeTotal } from "../government-utils";
 
-interface GovernmentDetailProps {
+interface StrategicDetailProps {
   node: ProjectNode | null;
+  breadcrumb: ProjectNode[];
   onChangeAllocation: (
     id: string,
     faculty: FacultyCode,
     amount: number,
   ) => void;
-  onEdit: (id: string) => void;
-  onRemove: (id: string) => void;
 }
 
-export function GovernmentDetail({
+export function StrategicDetail({
   node,
+  breadcrumb,
   onChangeAllocation,
-  onEdit,
-  onRemove,
-}: GovernmentDetailProps) {
+}: StrategicDetailProps) {
   if (!node) return <EmptyState />;
 
   const leaf = isLeaf(node);
   const total = nodeTotal(node);
   const allocations = nodeAllocations(node);
+  const ancestors = breadcrumb.slice(0, -1);
 
   return (
-    <Paper withBorder radius="md" p="lg" style={{ height: "100%" }}>
-      <ScrollArea h="100%">
+    <Paper
+      withBorder
+      radius="md"
+      p="lg"
+      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+    >
+      <ScrollArea mah={520} mih={300} offsetScrollbars>
         <Stack gap="md">
-          <Group justify="space-between" align="flex-start" wrap="nowrap">
-            <Stack gap={4} style={{ flex: 1 }}>
-              <Group gap={6}>
-                <Badge variant="light" size="sm">
-                  {node.code}
-                </Badge>
-                {leaf ? (
-                  <Badge variant="dot" color="teal" size="sm">
-                    รายการย่อย
-                  </Badge>
-                ) : (
-                  <Badge variant="dot" color="blue" size="sm">
-                    หมวดโครงการ
-                  </Badge>
-                )}
-              </Group>
-              <Title order={4}>{node.name}</Title>
-            </Stack>
-            <Group gap={4}>
-              <Button
-                size="xs"
-                variant="light"
-                leftSection={<IconEdit size={14} />}
-                onClick={() => onEdit(node.id)}
-              >
-                แก้ไข
-              </Button>
-              <Button
-                size="xs"
-                variant="light"
-                color="red"
-                leftSection={<IconTrash size={14} />}
-                onClick={() => onRemove(node.id)}
-              >
-                ลบ
-              </Button>
-            </Group>
-          </Group>
+          <Stack gap={4}>
+            {ancestors.length > 0 && (
+              <Text size="xs" c="dimmed" truncate="end">
+                {ancestors.map((a) => `${a.code} ${a.name}`).join(" / ")}
+              </Text>
+            )}
+            <Title order={4}>
+              {node.code} {node.name}
+            </Title>
+          </Stack>
 
           <Card withBorder radius="md" padding="md">
             <Group justify="space-between" align="center">
@@ -181,8 +149,12 @@ export function GovernmentDetail({
 
 function EmptyState() {
   return (
-    <Paper withBorder radius="md" p="xl" style={{ height: "100%" }}>
-      <Center h="100%" mih={400}>
+    <Paper
+      withBorder
+      radius="md"
+      style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
+      <Center>
         <Stack align="center" gap="xs">
           <IconClick size={40} color="var(--mantine-color-gray-5)" />
           <Text fw={500} c="gray.7">
