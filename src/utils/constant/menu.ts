@@ -131,12 +131,12 @@ export const Menu: AppMenu = {
       disabled: true,
       icon: Icon(IconUsers),
     },
-    {
-      title: "ข้อมูลหน่วยงาน",
-      path: "/admin/department",
-      disabled: true,
-      icon: Icon(Icon123),
-    },
+    // {
+    //   title: "ข้อมูลหน่วยงาน",
+    //   path: "/admin/department",
+    //   disabled: true,
+    //   icon: Icon(Icon123),
+    // },
     {
       title: "จัดสรรงบประมาณ",
       icon: Icon(IconMoneybag),
