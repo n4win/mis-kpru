@@ -1,4 +1,20 @@
-import { FACULTY_CODES, type FacultyCode, type ProjectNode, type Allocations } from "./types";
+import {
+  FACULTY_CODES,
+  type FacultyCode,
+  type ProjectNode,
+  type Allocations,
+  type NationalField,
+  type NationalRowStatus,
+  type NationalTotals,
+  type NationalUnit,
+  type NationalValue,
+} from "./types";
+
+const NATIONAL_FIELDS: NationalField[] = ["v1", "v2", "v3", "v4", "v5"];
+
+function n(v: NationalValue): number {
+  return v ?? 0;
+}
 
 export function isLeaf(node: ProjectNode): boolean {
   return !node.children || node.children.length === 0;
@@ -50,6 +66,17 @@ export function findNode(roots: ProjectNode[], id: string): ProjectNode | null {
     }
   }
   return null;
+}
+
+export function findPath(roots: ProjectNode[], id: string): ProjectNode[] {
+  for (const r of roots) {
+    if (r.id === id) return [r];
+    if (r.children) {
+      const childPath = findPath(r.children, id);
+      if (childPath.length > 0) return [r, ...childPath];
+    }
+  }
+  return [];
 }
 
 function mapNodes(
@@ -116,4 +143,74 @@ export function removeNode(roots: ProjectNode[], id: string): ProjectNode[] {
 
 export function fmt(n: number): string {
   return n.toLocaleString();
+}
+
+export function sumNationalA(u: NationalUnit): number {
+  return n(u.v1) + n(u.v2) + n(u.v3);
+}
+
+export function sumNationalB(u: NationalUnit): number {
+  return n(u.v4) + n(u.v5);
+}
+
+export function sumNationalTotal(u: NationalUnit): number {
+  return sumNationalA(u) + sumNationalB(u);
+}
+
+export function computeNationalTotals(units: NationalUnit[]): NationalTotals {
+  const t: NationalTotals = {
+    v1: 0,
+    v2: 0,
+    v3: 0,
+    v4: 0,
+    v5: 0,
+    A: 0,
+    B: 0,
+    all: 0,
+  };
+  for (const u of units) {
+    t.v1 += n(u.v1);
+    t.v2 += n(u.v2);
+    t.v3 += n(u.v3);
+    t.v4 += n(u.v4);
+    t.v5 += n(u.v5);
+    t.A += sumNationalA(u);
+    t.B += sumNationalB(u);
+    t.all += sumNationalTotal(u);
+  }
+  return t;
+}
+
+export function updateNationalUnit(
+  units: NationalUnit[],
+  id: string,
+  field: NationalField,
+  value: NationalValue,
+): NationalUnit[] {
+  return units.map((u) => (u.id === id ? { ...u, [field]: value } : u));
+}
+
+export function getRowStatus(u: NationalUnit): NationalRowStatus {
+  const filled = NATIONAL_FIELDS.filter((k) => u[k] !== null).length;
+  if (filled === 0) return "empty";
+  if (filled === NATIONAL_FIELDS.length) return "complete";
+  return "partial";
+}
+
+export function countNationalProgress(units: NationalUnit[]): {
+  complete: number;
+  partial: number;
+  empty: number;
+  total: number;
+} {
+  let complete = 0;
+  let partial = 0;
+  let empty = 0;
+  for (const u of units) {
+    const s = getRowStatus(u);
+    if (s === "complete") complete++;
+    else if (s === "partial") partial++;
+    else empty++;
+  }
+  return { complete, partial, empty, total: units.length };
 }

@@ -1,16 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
-  ActionIcon,
   Box,
-  Button,
   Group,
-  Menu,
   Paper,
   ScrollArea,
   Stack,
   Text,
+  TextInput,
   Tree,
   type RenderTreeNodePayload,
   type TreeNodeData,
@@ -22,27 +20,37 @@ import {
   IconCircleCheckFilled,
   IconCircleDot,
   IconCircleDashed,
-  IconDotsVertical,
-  IconEdit,
-  IconPlus,
-  IconTrash,
+  IconSearch,
 } from "@tabler/icons-react";
-import type { ProjectNode } from "./types";
-import { fmt, isLeaf, nodeTotal } from "./government-utils";
+import type { ProjectNode } from "../types";
+import { fmt, isLeaf, nodeTotal } from "../government-utils";
 
-interface GovernmentTreeProps {
+interface StrategicTreeProps {
   roots: ProjectNode[];
   selectedId: string | null;
   onSelect: (id: string) => void;
-  onAddChild: (parentId: string | null) => void;
-  onEdit: (id: string) => void;
-  onRemove: (id: string) => void;
 }
 
 interface NodeMeta {
   raw: ProjectNode;
   total: number;
   status: "filled" | "partial" | "empty";
+}
+
+function filterTree(nodes: ProjectNode[], query: string): ProjectNode[] {
+  if (!query) return nodes;
+  const q = query.toLowerCase();
+  return nodes.flatMap((n) => {
+    const selfMatch =
+      n.name.toLowerCase().includes(q) || n.code.toLowerCase().includes(q);
+    const filteredChildren = n.children
+      ? filterTree(n.children, query)
+      : undefined;
+    if (selfMatch) return [n];
+    if (filteredChildren && filteredChildren.length > 0)
+      return [{ ...n, children: filteredChildren }];
+    return [];
+  });
 }
 
 function toTreeData(
@@ -80,19 +88,19 @@ function StatusIcon({ status }: { status: NodeMeta["status"] }) {
   return <IconCircleDashed size={14} color="var(--mantine-color-gray-5)" />;
 }
 
-export function GovernmentTree({
+export function StrategicTree({
   roots,
   selectedId,
   onSelect,
-  onAddChild,
-  onEdit,
-  onRemove,
-}: GovernmentTreeProps) {
+}: StrategicTreeProps) {
+  const [search, setSearch] = useState("");
+
   const metaIndex = useMemo(() => new Map<string, NodeMeta>(), []);
   const data = useMemo(() => {
     metaIndex.clear();
-    return toTreeData(roots, metaIndex);
-  }, [roots, metaIndex]);
+    const filtered = filterTree(roots, search.trim());
+    return toTreeData(filtered, metaIndex);
+  }, [roots, search, metaIndex]);
 
   const tree = useTree({
     initialExpandedState: getTreeExpandedState(data, "*"),
@@ -163,75 +171,33 @@ export function GovernmentTree({
             {fmt(total)}
           </Text>
         )}
-        <Menu shadow="md" position="bottom-end" withinPortal>
-          <Menu.Target>
-            <ActionIcon
-              size="sm"
-              variant="subtle"
-              color="gray"
-              onClick={(e) => e.stopPropagation()}
-              aria-label="ตัวเลือก"
-            >
-              <IconDotsVertical size={14} />
-            </ActionIcon>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item
-              leftSection={<IconPlus size={14} />}
-              onClick={(e) => {
-                e.stopPropagation();
-                onAddChild(raw.id);
-              }}
-            >
-              เพิ่มหัวข้อย่อย
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconEdit size={14} />}
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit(raw.id);
-              }}
-            >
-              แก้ไขชื่อ/รหัส
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item
-              leftSection={<IconTrash size={14} />}
-              color="red"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove(raw.id);
-              }}
-            >
-              ลบ
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
       </Group>
     );
   };
 
   return (
-    <Paper withBorder radius="md" p="sm" style={{ height: "100%" }}>
-      <Stack gap="xs" h="100%">
-        <Group justify="space-between">
-          <Text fw={600} size="sm">
-            โครงการ
-          </Text>
-          <Button
-            size="xs"
-            variant="light"
-            leftSection={<IconPlus size={14} />}
-            onClick={() => onAddChild(null)}
-          >
-            เพิ่มโครงการหลัก
-          </Button>
-        </Group>
-        <ScrollArea style={{ flex: 1, minHeight: 400 }}>
+    <Paper
+      withBorder
+      radius="md"
+      p="sm"
+      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+    >
+      <Stack gap="xs" style={{ flex: 1, minHeight: 0 }}>
+        {/* <Text fw={600} size="sm">
+          โครงการ
+        </Text> */}
+        <TextInput
+          placeholder="ค้นหาโครงการ..."
+          value={search}
+          onChange={(e) => setSearch(e.currentTarget.value)}
+          leftSection={<IconSearch size={14} />}
+          size="xs"
+        />
+        <ScrollArea mah={520} mih={300} offsetScrollbars>
           {data.length === 0 ? (
             <Stack align="center" gap="xs" py="xl">
               <Text size="sm" c="dimmed">
-                ยังไม่มีโครงการ
+                {search ? "ไม่พบโครงการที่ค้นหา" : "ยังไม่มีโครงการ"}
               </Text>
             </Stack>
           ) : (

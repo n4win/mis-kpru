@@ -1,4 +1,4 @@
-import type { GovernmentDataMap, ProjectNode } from "./types";
+import type { GovernmentDataMap, NationalUnit, ProjectNode } from "./types";
 
 const strategicTree: ProjectNode[] = [
   {
@@ -143,3 +143,29 @@ export const GOVERNMENT_MOCK: GovernmentDataMap = {
   national: null,
   strategic: strategicTree,
 };
+
+export const NATIONAL_UNITS_MOCK: NationalUnit[] = [
+  { id: "u1", code: "1", name: "คณะครุศาสตร์", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u2", code: "2", name: "คณะมนุษยศาสตร์และสังคมศาสตร์", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u3", code: "3", name: "คณะวิทยาการจัดการ", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u4", code: "4", name: "คณะวิทยาศาสตร์และเทคโนโลยี", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u4-1", code: "4.1", name: "ศูนย์วิทยาศาสตร์", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u5", code: "5", name: "คณะเทคโนโลยีอุตสาหกรรม", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u6", code: "6", name: "สำนักงานอธิการบดี", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u6-1", code: "6.1", name: "กองกลางและงานอื่นๆ", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u6-2", code: "6.2", name: "กองพัฒนานักศึกษา", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u6-3", code: "6.3", name: "กองนโยบายและแผน", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u6-4", code: "6.4", name: "งานมาตรฐานและประกันคุณภาพ", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u6-5", code: "6.5", name: "งานวิเทศสัมพันธ์และกิจการอาเซียน", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u7", code: "7", name: "สำนักบริการวิชาการและจัดหารายได้", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u8", code: "8", name: "สถาบันวิจัยและพัฒนา", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u9", code: "9", name: "สำนักวิทยบริการและเทคโนโลยีสารสนเทศ", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u9-1", code: "9.1", name: "ศูนย์ภาษา (สอบภาษาอังกฤษ)", level: 1, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u10", code: "10", name: "สำนักส่งเสริมวิชาการและงานทะเบียน", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u11", code: "11", name: "สำนักศิลปะและวัฒนธรรม", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u12", code: "12", name: "สภาคณาจารย์และข้าราชการ", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u13", code: "13", name: "หน่วยตรวจสอบภายใน", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u14", code: "14", name: "คณะพยาบาลศาสตร์", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u15", code: "15", name: "มหาวิทยาลัยราชภัฏกำแพงเพชร แม่สอด", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+  { id: "u16", code: "16", name: "บริหารจัดการส่วนกลางของมหาวิทยาลัย", level: 0, v1: null, v2: null, v3: null, v4: null, v5: null },
+];

@@ -9,9 +9,17 @@ export interface FacultyGroup {
 export const sumCounts = (counts: StudentCounts) =>
   YEAR_CODES.reduce((sum, y) => sum + (counts[y] ?? 0), 0);
 
-export const groupByFaculty = (rows: RevenueRow[]): FacultyGroup[] => {
-  const groups: FacultyGroup[] = [];
-  let current: FacultyGroup | null = null;
+interface FacultyRowLike {
+  faculty: string;
+  program?: string;
+  isFacultyHeader?: boolean;
+}
+
+export function groupByFaculty<T extends FacultyRowLike>(
+  rows: T[],
+): { header: T; programs: T[] }[] {
+  const groups: { header: T; programs: T[] }[] = [];
+  let current: { header: T; programs: T[] } | null = null;
   for (const r of rows) {
     if (r.isFacultyHeader) {
       if (current) groups.push(current);
@@ -22,7 +30,28 @@ export const groupByFaculty = (rows: RevenueRow[]): FacultyGroup[] => {
   }
   if (current) groups.push(current);
   return groups;
-};
+}
+
+export function filterByFacultyOrProgram<T extends FacultyRowLike>(
+  rows: T[],
+  query: string,
+): T[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return rows;
+  const result: T[] = [];
+  for (const g of groupByFaculty(rows)) {
+    const facultyMatch = g.header.faculty.toLowerCase().includes(q);
+    if (facultyMatch) {
+      result.push(g.header, ...g.programs);
+      continue;
+    }
+    const matched = g.programs.filter((p) =>
+      (p.program ?? "").toLowerCase().includes(q),
+    );
+    if (matched.length > 0) result.push(g.header, ...matched);
+  }
+  return result;
+}
 
 export const facultyYearTotals = (programs: RevenueRow[]) => {
   const totals: Record<YearCode, number> = {
